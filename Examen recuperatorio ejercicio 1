@@ -1,0 +1,111 @@
+/*Una software factory registra la siguiente informacion de sus
+empleados:
+Nombre edad (validar) sexo (masculino - femenino - no binario) puesto (programador - analista - Qa) sueldo (entre 15000 y
+70000) La empresa desea saber: se debe informar de existir, o
+informar que no existe , en el caso que corresponda.
+a) promedio de sueldos para cada puesto.
+b) el sexo del que percibe el mayor sueldo.
+c) el nombre del empleado femenino con mas sueldo.
+d) cantidad de programadores no binarios que cobran sueldos entre 20000 y 55000.
+*/
+function mostrar()
+{
+	var nombre;
+	var edad;
+	var sexo;
+	var puesto;
+	var sueldo;
+	var pregunta;
+	var flag=true;
+
+	var sueldoProgramador=0;
+	var sueldoAnalista=0;
+	var sueldoQa=0;
+	var promedioSueldoProgramador=0;
+	var promedioSueldoAnalista=0;
+	var promedioSueldoQa=0;
+
+	var flagMayorSueldo=true;
+	var mayorSueldo;
+	var sexoMayorSueldo;
+	var flagMayorSueldoFem=true;
+	var mayorSueldoFem;
+	var nombreMayorSueldoFem;
+	var contProgramNOBi=0;
+
+	do{
+		nombre=prompt("Ingrese el nombre.");
+		while(isNaN(nombre)==false){
+			nombre==prompt("Intente de nuevo");
+		}
+
+		edad=prompt("Ingrese la edad.");
+		edad=parseInt(edad);
+		while(isNaN(edad)==true){
+			edad==prompt("Error, indique la edad de nuevo.");
+		}
+
+		sexo=prompt("Indique el sexo (m=masculino, f=femenino o n=no binario).");
+		while(sexo!="m"&&sexo!="f"&&sexo!="n"){
+			sexo=prompt("Ponga m para masculino, f para femenino o n para no binario.");
+		}
+
+		puesto=prompt("¿Es programador, analista o Qa?");
+		while(puesto!="programador"&&puesto!="analista"&&puesto!="Qa"){
+			puesto=prompt("Error. Ingrese programador, analista o Qa");
+		}
+
+		sueldo=prompt("¿Cual es su sueldo?");
+		sueldo=parseInt(sueldo);
+		while(sueldo<15000||sueldo>70000){
+			sueldo=prompt("Sueldo Incorrecto (el sueldo debe ser entre 15000 y 70000)");
+		}
+
+		swith(puesto){
+			case:programador
+				promedioSueldoProgramador=promedioSueldoProgramador+sueldo;
+				sueldoProgramador++;
+				break;
+			case:analista
+				promedioSueldoAnalista=promedioSueldoAnalista+sueldo;
+				sueldoAnalista++;
+				break;
+			case:Qa
+				promedioSueldoQa=promedioSueldoQa+sueldo;
+				sueldoQa++;
+				break;
+		}
+
+		while(flagMayorSueldo==true||sueldo>mayorSueldo){
+			mayorSueldo=sueldo;
+			sexoMayorSueldo=sexo;
+			flagMayorSueldo=false;
+		}
+
+		while(flagMayorSueldo==true||sueldo>mayorSueldo&&sexo=="f"){
+			mayorSueldoFem=sueldo;
+			nombreMayorSueldoFem=nombre;
+			flagMayorSueldoFem=false;
+		}
+
+		while(puesto=="programador"&&sexo=="n"&&sueldo>=20000&&sueldo<=55000){
+			contProgramNOBi++;
+		}
+
+		pregunta=prompt("¿Desea continuar?");
+	}while(pregunta=="no");
+
+//a) promedio de sueldos para cada puesto.
+	promedioSueldoProgramador=promedioSueldoProgramador/sueldoProgramador;
+	promedioSueldoAnalista=promedioSueldoAnalista/sueldoAnalista;
+	promedioSueldoQa=promedioSueldoQa/sueldoQa;
+
+	alert("El promedio de los sueldos es "+promedioSueldoProgramador+" para los programadores, "+promedioSueldoAnalista+" para los analistas y "+promedioSueldoQa+" para los Qa.");
+
+//b) el sexo del que percibe el mayor sueldo.
+	alert("El que resibe el mayor sueldo es "+sexoMayorSueldo+".");
+//c) el nombre del empleado femenino con mas sueldo.
+	alert("El nombre de la empleada con mas sueldo es "+nombreMayorSueldoFem+".");
+//d) cantidad de programadores no binarios que cobran sueldos entre 20000 y 55000.
+	alert("La cantidad de programadores no binarios que cobran sueldos entre 20000 y 55000 es "+contProgramNOBi+".");
+}
