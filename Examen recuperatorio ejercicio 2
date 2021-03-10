@@ -1,0 +1,137 @@
+/*Realizar el algoritmo que permita ingresar los datos de los 500
+alumnos de la UTN FRA, los datos solicitados son:
+nombre carrera("Quimica";"Fisica";"Sistemas") sexo (masculino - femenino -
+no binario) cantidad de materias(entre 1 y 5) Nota promedio (entre 0
+y 10)  edad (validar) se debe informar de existir, o informar que no
+existe , en el caso que corresponda.
+a) El nombre del mejor promedio
+de los alumnos que estudian Fisica. (Sin importar el sexo).
+b) El nombre de la alumna mas joven.
+c) Porcentaje de estudiantes que
+estudia cada carrera.
+d) La edad y nombre del estudiante que cursa
+mas materias exceptuando la carrera de Quimica.
+*/
+
+function mostrar()
+{
+	var nombre;
+	var carrera;
+	var sexo;
+	var cantidadMaterias;
+	var nota;
+	var edad;
+
+	var mejorPromedioFisica;
+	var nombreMejorPromedioFisica;
+	var flagMejorPromedioFisica=true;
+
+	var alumnaMinEdad;
+	var nombreAlumnaMinEdad;
+	var flagAlumnaMinEdad=true;
+	var contQuimica=0;
+	var contFisica=0;
+	var contSistemas=0;
+	var porcentajeQuimica;
+	var porcentajeFisica;
+	var porcentajeSistemas;
+
+	var maxMaterias;
+	var nombreMaxMaterias;
+	var edadMaxMaterias;
+	var flagMaxMaterias=true;
+
+	for(var i; i<=500; i++){
+		nombre=prompt("Ingresar el nombre del alumno.");
+		while(isNaN(nombre)==false){
+			nombre=prompt("Intente ingresar el nombre de nuevo.");
+		}
+
+		carrera=prompt("Ingresar la carrera del alumno (quimica, fisica o sistemas).");
+		while(carrera!="quimica"&&carrera!="fisica"&&carrera!="sistemas"){
+			carrera=prompt("Error. Ingresar quimica, fisica o sistemas");
+		}
+
+		sexo=prompt("Ingresar el sexo del alumno.");
+		while(sexo!="masculino"&&sexo!="femenino"&&sexo!="no binario"){
+			sexo=prompt("Indique si es masculino, femenino o no binario.");
+		}
+
+		cantidadMaterias=prompt("Ingresar la cantidad de materias del alumno (entre 1 y 5).");
+		cantidadMaterias=parseInt(cantidadMaterias);
+		while(cantidadMaterias<1||cantidadMaterias>5){
+			cantidadMaterias=prompt("Cantidad de materias ingresadas fuera del rango (entre 1 y 5).");
+		}
+
+		nota=prompt("Ingresar la nota promedio del alumno (entre 0 y 10).");
+		nota=parseInt(nota);
+		while(nota<0||nota>10){
+			nota=prompt("Error. Ingresar numero entre 0 y 10.");
+		}
+
+		edad=prompt("Ingresar la edad del alumno.");
+		edad=parseInt(edad);
+		while(edad<18){
+			edad=prompt("Es muy menor, ingresar 18 o mas.");
+		}
+
+		while(carrera=="fisica"&&(mejorPromedioFisica<nota||flagMejorPromedioFisica==true)){
+			mejorPromedioFisica=nota;
+			nombreMejorPromedioFisica=nombre;
+			flagMejorPromedioFisica=false;
+		}
+
+		while((flagAlumnaMinEdad==true||alumnaMinEdad>edad)&&sexo=="femenino"){
+			alumnaMinEdad=edad;
+			nombreAlumnaMinEdad=nombre;
+			flagAlumnaMinEdad=false;
+		}
+
+		swith(carrera){
+			case:"quimica"
+				contQuimica++;
+				break;
+			case:"fisica"
+				contFisica++;
+				break;
+			case:"sistemas"
+				contSistemas++;
+				break;
+		}
+
+		while((flagMaxMaterias==true||maxMaterias<cantidadMaterias)&&carrera!="quimica"){
+			maxMaterias=cantidadMaterias;
+			nombreMaxMaterias=nombre;
+			edadMaxMaterias=edad;
+			flagMaxMaterias=false;
+		}
+
+	}
+
+//a) El nombre del mejor promedio de los alumnos que estudian Fisica. (Sin importar el sexo).
+	if(carrera=="fisica"){
+		alert("El nombre del alumno con el mejor promedio de fisica es "+nombreMejorPromedioFisica+".");
+	}else{
+		alert("Ningun alumno estudio fisica.");
+	}
+
+//b) El nombre de la alumna mas joven.
+	if(sexo=="femenino"){
+		alert("El nombre de la alumna mas joven es "+nombreAlumnaMinEdad+".");
+	}else{
+		alert("No hubo alumnos femeninos.");
+	}
+
+//c) Porcentaje de estudiantes que estudia cada carrera.
+	porcentajeQuimica=contQuimica*100/500;
+	porcentajeFisica=contFisica*100/500;
+	porcentajeSistemas=contSistemas*100/500;
+
+//d) La edad y nombre del estudiante que cursa mas materias exceptuando la carrera de Quimica.
+	if(carrera!="quimica"){
+		alert("La edad del estudiante que cursa mas materias exceptuando la carrera de Quimica es edadMaxMaterias y se llama "+nombreMaxMaterias+".");
+	}else{
+		alert("Solo se estudio quimica.");
+	}
+
+}
